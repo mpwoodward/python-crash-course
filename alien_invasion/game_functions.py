@@ -19,7 +19,14 @@ def check_keydown_events(event, ai_settings, screen, stats, sb, ship,
     elif event.key == pygame.K_p:
         start_game(ai_settings, screen, stats, sb, ship, bullets, aliens)
     elif event.key == pygame.K_q:
-        sys.exit()
+        stop_game(stats)
+
+
+def stop_game(stats):
+    """Write out the high score and exit the program."""
+    with open('high_score.txt', 'w') as high_score_file:
+        high_score_file.write(str(stats.high_score))
+    sys.exit()
 
 
 def fire_bullet(ai_settings, screen, ship, bullets):
@@ -60,7 +67,7 @@ def check_play_button(ai_settings, screen, stats, sb, play_button, ship,
     """Start a new game when the player clicks Play."""
     button_clicked = play_button.rect.collidepoint(mouse_x, mouse_y)
     if button_clicked and not stats.game_active:
-        start_game(ai_settings, screen, stats, ship, bullets, aliens)
+        start_game(ai_settings, screen, stats, sb, ship, bullets, aliens)
 
 
 def start_game(ai_settings, screen, stats, sb, ship, bullets, aliens):
